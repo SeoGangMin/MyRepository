@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script  src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		console.log('tranStart!');
+		
+		$('#req_select').change(function(){
+			var uri = $(this).find('option:selected').text();
+			
+			if(uri == '선택')return; 
+			
+			if(uri == 'member/login'){
+				params = {'member_name' :"", 'member_phone' : '01050180568'}; 				
+			}else{
+				params = ''; 
+			}
+			callTran(uri,params); 
+		});	
+		
+	});
+	
+	
+	function callTran(uri, params){
+		var url = "http://localhost:8080/CattleService/api/"+uri
+		$('#req_confirm').text(url); 
+		
+			$.ajax({
+				type:"get",
+				url : url,
+				data: params,
+				dataType:"Json",
+				success : function(data, textStatus, jqXHR){
+					$('#success').text('');
+					$('#fail').text('');
+					
+					$('#success').text(decodeURIComponent(JSON.stringify(data)));
+					var obj = {
+							data : data,
+							textStatus: textStatus,
+							jqXHR : jqXHR
+					};
+					
+					//$('#success').text(decodeURIComponent(JSON.stringify(obj)));
+					
+				}, 
+				error: function(e, textStatus){
+					var obj = {
+							error : e,
+							textStatus:textStatus
+					};
+					$('#success').text('');
+					$('#fail').text('');
+					$('#fail').text(JSON.stringify(obj));
+				}
+			});
+	}
+	
+</script>
+</head>
+<body>
+<div>
+	<div>
+		<span>RequestURL : </span><span id="req_confirm"></span>
+	</div>
+	<div>
+	<select id="req_select">
+		<option>선택</option>
+		<option>cattle/info</option>
+		<option>member/login</option>
+		<option>member/logout</option>
+	</select>
+	</div>
+	<div>
+		<span>success : </span><span id="success"></span>
+	</div>
+	<div>
+		<span>fail : </span><span id="fail"></span>
+	</div>
+</div>
+</body>
+</html>
