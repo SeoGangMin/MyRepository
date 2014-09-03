@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD SQL Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+	<typeAlias alias="CattleVO" type="com.spring.vo.CattleVO"/>
+	<select id="select_list" parameterClass="java.lang.String" resultClass="CattleVO">
+		SELECT 
+			cattle_idx, 
+			cattle_no, 
+			cattle_noti_yn,
+			DATE_FORMAT(cattle_noti_date, "%Y%m%d") AS cattle_noti_date,
+			DATE_FORMAT(cattle_out_date, "%Y%m%d") AS cattle_out_date,
+			member_idx
+		FROM 
+			tb_cattle_info
+		WHERE 
+			member_idx = #member_idx#
+	</select>
+	
+	<select id="select_one" parameterClass="CattleVO" resultClass="CattleVO">
+		SELECT 
+			cattle_idx, 
+			cattle_no, 
+			cattle_noti_yn,
+			DATE_FORMAT(cattle_noti_date, "%Y%m%d") AS cattle_noti_date,
+			DATE_FORMAT(cattle_out_date, "%Y%m%d") AS cattle_out_date,
+			member_idx
+		FROM 
+			tb_cattle_info
+		WHERE 
+			member_idx = #member_idx#
+		AND 
+			cattle_idx = #cattle_idx#
+	</select>
+	
+	<select id="select_ready_list" parameterClass="java.util.Map" resultClass="CattleVO">
+		SELECT 
+			cattle_idx, 
+			cattle_no, 
+			cattle_noti_yn, 
+			DATE_FORMAT(cattle_noti_date, "%Y%m%d") AS cattle_noti_date,
+			DATE_FORMAT(cattle_out_date, "%Y%m%d") AS cattle_out_date,
+			member_idx
+		FROM 
+			tb_cattle_info
+		WHERE 
+			cattle_out_date  
+		IN(
+			SELECT 
+				DATE_FORMAT(cattle_out_date, "%Y%m%d") 
+			FROM 
+				tb_cattle_info 
+			WHERE 
+				cattle_out_date &lt;= #inputDate#
+			AND	
+				cattle_idx=#cattle_idx#
+			AND	
+				member_idx=#member_idx#
+		)
+	</select>
+	
+	<select id="select_max_idx" resultClass="String">
+		SELECT 
+			COALESCE(MAX(cattle_idx),1) as cattle_idx 
+		FROM 
+			tb_cattle_info 
+	</select>
+	
+	
+	<delete id="delete_expire_info" parameterClass="String">
+		DELETE t1.*, t2.* FROM 
+			tb_cattle_info t1, tb_reg_info t2
+		WHERE 
+			t1.cattle_idx = t2.cattle_idx
+		AND 
+			t1.cattle_idx 
+		IN(
+			SELECT sub.cattle_idx FROM(
+				SELECT 
+					cattle_idx
+				FROM 
+					tb_cattle_info
+				WHERE 
+					cattle_out_date = DATE_FORMAT(NOW(), "%Y%m%d")	
+				AND	
+					member_idx = #member_idx#
+			)AS sub
+		);
+	</delete>
+	
+	<delete id="delete_cattle_one" parameterClass="CattleVO">
+		DELETE FROM
+			tb_cattle_info
+		WHERE
+			cattle_idx = #cattle_idx#
+		AND 
+			member_idx = #member_idx#
+		AND
+			
+	</delete>
+	
+	<update id="update_cattle_out_date" parameterClass="java.util.Map">
+		UPDATE 
+			tb_cattle_info SET 
+			cattle_out_date = #update_value# 
+		WHERE 
+			cattle_idx = #cattle_idx#
+		AND
+			member_idx = #memberIdx#
+	</update>
+	
+	<insert id="insert_cattle_info" parameterClass="CattleVO">
+		INSERT INTO 
+			tb_cattle_info
+			(
+				cattle_no, 
+				cattle_noti_yn, 
+				cattle_noti_date,
+				cattle_out_date,
+				member_idx
+			)
+		VALUES
+			(
+				#cattle_no#,
+				#cattle_noti_yn#,
+				#cattle_noti_date#,
+				#cattle_out_date#,
+				#member_idx#		
+			)
+			
+	</insert>
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

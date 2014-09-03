@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD SQL Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+	<typeAlias alias="RegInfoVO" type="com.spring.vo.RegInfoVO"/>
+	<select id="select_reg_info_list" parameterClass="java.lang.String" resultClass="regInfoVO">
+		SELECT 	
+			reg_idx,
+			DATE_FORMAT(reg_date, "%Y%m%d") AS reg_date,
+			cattle_idx
+		FROM 
+			tb_reg_info
+		WHERE
+			cattle_idx = #cattle_id#
+	</select>
+	
+	<select id="select_reg_info_one" parameterClass="RegInfoVO" resultClass="regInfoVO">
+		SELECT 	
+			reg_idx,
+			DATE_FORMAT(reg_date, "%Y%m%d") AS reg_date,
+			cattle_idx
+		FROM 
+			tb_reg_info
+		WHERE
+			reg_idx = #reg_idx#
+	</select>
+	
+	<delete id="delete_reg_info_one" parameterClass="RegInfoVO">
+		DELETE FROM
+			tb_reg_info
+		WHERE 
+			reg_idx = #reg_idx#
+	</delete>
+	
+	<delete id="delete_reg_info_list" parameterClass="RegInfoVO">
+		DELETE FROM
+			tb_reg_info
+		WHERE 
+			cattle_idx = #cattle_idx#
+	</delete>
+	
+	<insert id="insert_reg_info" parameterClass="RegInfoVO">
+		INSERT INTO 
+			tb_reg_info
+			(
+				reg_date,
+				cattle_idx
+			)
+		VALUES
+			(
+				#reg_date#,
+				#cattle_idx#
+			)
+	</insert>
+</sqlMap>
+
+
+
+
+
+
+
+
+
+
+
+

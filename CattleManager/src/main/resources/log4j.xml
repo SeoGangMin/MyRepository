@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="CONSOLEAPPENDER" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-5p %C.%M(%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="FILEAPPENDER" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="${webapp.root}/WEB-INF/log/project.log" />
+		<param name="append" value="true" />
+		<param name="datePattern" value="'.'yyyyMMdd" />
+		<!-- param name="maxFileSize" value="10MB" />
+		<param name="maxBackupIndex" value="10" / -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-5p %C{2}.%M(%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="FILEAPPENDER_SQL" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="${webapp.root}/WEB-INF/log/sql.log" />
+		<param name="append" value="true" />
+		<param name="datePattern" value="'.'yyyyMMdd" />
+		<!-- param name="maxFileSize" value="10MB" />
+		<param name="maxBackupIndex" value="10" / -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-5p %C{2}.%M(%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%p - %C{1}.%M(%L) | %m%n" />
+		</layout>
+
+		<filter class="org.apache.log4j.varia.StringMatchFilter">
+			<param name="StringToMatch" value="Result" />
+			<param name="AcceptOnMatch" value="false" />
+		</filter>
+	</appender>
+
+<!-- MyBatis Query Log -->
+	<logger name="org.apache.ibatis">
+		<level value="WARN" />
+	</logger>
+	<logger name="org.mybatis">
+		<level value="WARN" />
+	</logger>
+	<logger name="java.sql.Connection">
+		<level value="WARN" />
+	</logger>
+	<logger name="java.sql.PreparedStatement">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql.CallableStatement">
+		<level value="DEBUG" />
+	</logger>
+<!-- // MyBatis Query Log -->
+
+<!-- Spring3 Log -->
+	<logger name="org.springframework">
+		<level value="WARN" />
+	</logger>
+	<logger name="freemarker">
+		<level value="WARN" />
+	</logger>
+	<logger name="org.apache.tiles">
+		<level value="WARN" />
+	</logger>
+	<logger name="org.hibernate">
+		<level value="WARN" />
+	</logger>
+<!-- // Spring3 Log -->
+
+	<logger name="com.fas.framework">
+		<level value="INFO" />
+	</logger>
+	<logger name="com.fas.sendq">
+		<level value="DEBUG" />
+	</logger>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="CONSOLEAPPENDER" />
+	</root>
+</log4j:configuration>

@@ -22,7 +22,8 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-	<filter>
+	  <!-- Encoding Filter  -->
+	  <filter>
 	    <filter-name>encodingFilter</filter-name>
 	    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
 	    <init-param>
@@ -30,6 +31,11 @@
 	      <param-value>UTF-8</param-value>
 	    </init-param>
 	  </filter>
+      <filter-mapping>
+       <filter-name>encodingFilter</filter-name>
+       <url-pattern>/*</url-pattern>
+      </filter-mapping>
+	  <!-- Encoding Filter  -->
 	  
 	  <!-- CrossDomain solution Filter  -->
 	  <filter>
@@ -40,7 +46,7 @@
         <filter-name>springFilter</filter-name>
         <url-pattern>/*</url-pattern>
       </filter-mapping>
-	  
+	   <!-- CrossDomain solution Filter  -->
 	<welcome-file-list>
     	<welcome-file>index.html</welcome-file>
   	</welcome-file-list>

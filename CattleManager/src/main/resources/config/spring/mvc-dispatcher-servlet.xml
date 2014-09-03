@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/oxm 
+		http://www.springframework.org/schema/oxm/spring-oxm-3.1.xsd	
+		">
+
+	<context:component-scan base-package="com.spring" />
+
+	<mvc:annotation-driven/>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/cattle/*"/>
+			<bean class="com.spring.auth.CattleInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+	  <property name="order" value="1" />
+	  <property name="mediaTypes">
+		<map>
+		   <entry key="json" value="application/json" />
+		   <entry key="xml" value="application/xml" />
+		</map>
+	  </property>
+	  <property name="ignoreAcceptHeader" value="true" />
+	</bean>
+	
+</beans>
+
+
+

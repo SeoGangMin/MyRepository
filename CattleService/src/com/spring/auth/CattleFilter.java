@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
 
+import com.spring.common.Common;
+
 public class CattleFilter implements Filter{
 
 	@Override
@@ -26,6 +28,9 @@ public class CattleFilter implements Filter{
 		// TODO Auto-generated method stub
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
+		
+		String headerInfo = Common.getHeaderInfo(request);
+		System.out.println(headerInfo);
 		
 		response.addHeader("Access-Control-Allow-Origin", "*");
 	    if (request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {

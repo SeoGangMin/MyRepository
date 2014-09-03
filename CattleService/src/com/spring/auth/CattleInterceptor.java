@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.spring.common.Const;
 import com.spring.dao.MemberDao;
 import com.spring.vo.MemberVO;
@@ -43,8 +44,9 @@ public class CattleInterceptor implements HandlerInterceptor{
 		
 		if(member == null){
 			System.out.println("need Login!");
-			String redirectUrl = req.getContextPath()+"/api/member/LoginError";
-			res.sendRedirect(redirectUrl+"?login_status="+Const.CODE_LOG_OFF);
+			//String redirectUrl = req.getContextPath()+"/api/member/LoginError";
+			//res.sendRedirect(redirectUrl+"?login_status="+Const.CODE_LOG_OFF);
+			res.sendError(404, "memberLogOff");
 			return false; 
 		}
 		

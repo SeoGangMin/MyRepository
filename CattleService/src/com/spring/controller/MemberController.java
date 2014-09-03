@@ -1,5 +1,6 @@
 package com.spring.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.spring.common.Common;
 import com.spring.common.Const;
 import com.spring.common.ResultData;
 import com.spring.dao.MemberDao;
@@ -38,7 +40,13 @@ public class MemberController {
 			@RequestParam(value="member_phone", required=true) String member_phone
 			){
 		
-		member_name = URLDecoder.decode(member_name);
+		//member_name = URLDecoder.decode(member_name);
+		try {
+			member_name = new String(member_name.getBytes("iso-8859-1"), "euc-kr");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		try {	
