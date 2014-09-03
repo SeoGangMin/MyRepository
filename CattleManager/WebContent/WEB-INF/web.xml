@@ -20,9 +20,9 @@
 	</servlet-mapping>
 
 	<!-- Spring Listener  -->
-	<listener>
+	<!-- <listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+	</listener> -->
 	
 	<!-- Log4j Config -->
 	<listener>
@@ -50,11 +50,11 @@
 	  
 	<!-- CrossDomain Filter  -->
 	<filter>
-	  <filter-name>CrossDomainFilter</filter-name>
-	  <filter-class>com.spring.auth.CattleFilter</filter-class>
+	  <filter-name>appFilter</filter-name>
+	  <filter-class>com.cattle.filter.CattleFilter</filter-class>
 	</filter>
 	<filter-mapping>
-	  <filter-name>CrossDomainFilter</filter-name>
+	  <filter-name>appFilter</filter-name>
 	  <url-pattern>/*</url-pattern>
 	</filter-mapping>
  

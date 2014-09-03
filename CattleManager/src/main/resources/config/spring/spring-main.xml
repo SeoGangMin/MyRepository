@@ -15,8 +15,8 @@
 		">
 
 	<!-- import xml -->
-	<import resource="classpath:/config/spring-datasource.xml"/>
-	<import resource="classpath:/config/spring-interceptor.xml"/>
+	<import resource="classpath:/config/spring/spring-datasource.xml"/>
+	<import resource="classpath:/config/spring/spring-interceptor.xml"/>
 	
 </beans>
 

@@ -2,7 +2,7 @@
 
 <!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD SQL Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
 <sqlMap>
-	<typeAlias alias="RegInfoVO" type="com.spring.vo.RegInfoVO"/>
+	<!-- <typeAlias alias="RegInfoVO" type="com.spring.vo.RegInfoVO"/>
 	<select id="select_reg_info_list" parameterClass="java.lang.String" resultClass="regInfoVO">
 		SELECT 	
 			reg_idx,
@@ -51,7 +51,7 @@
 				#reg_date#,
 				#cattle_idx#
 			)
-	</insert>
+	</insert> -->
 </sqlMap>
 
 

@@ -14,9 +14,8 @@
         useStatementNamespaces="true" />
 
 	
-    <sqlMap resource="ibatis/sqlmap/cattle_info.xml"/>
-    <sqlMap resource="ibatis/sqlmap/member_info.xml"/>
-    <sqlMap resource="ibatis/sqlmap/reg_info.xml"/>
+    <sqlMap resource="config/ibatis/mysql/cattle.xml"/>
+    <sqlMap resource="config/ibatis/mysql/member.xml"/>
 </sqlMapConfig>
 
 
