@@ -3,6 +3,7 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
@@ -12,53 +13,61 @@
         http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/oxm 
 		http://www.springframework.org/schema/oxm/spring-oxm-3.1.xsd	
-		">
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd"
+		>
 
 	<!-- Autowired Annotation -->
 	<context:annotation-config />
 	<context:component-scan base-package="com.cattle"/>
 	<mvc:annotation-driven/>
 	
-	<!-- Data Source Definition -->
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:config/ibatis/jndi/db.properties</value>
-            </list>
-        </property>
-    </bean>
-    
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${driver}"/>
-		<property name="url" value="${url}"/>
-		<property name="username" value="${username}"/>
-		<property name="password" value="${password}"/>
-		<property name="defaultAutoCommit" value="true"/>
-   </bean>
-    
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-	  <property name="dataSource" ref="dataSource"/>
+	
+	<!-- 설정 파일 로딩 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/config/properties/db.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- // 설정 파일 로딩 -->
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${JDBC.DRIVER_CLASS}" />
+		<property name="url" value="${JDBC.URL}" />
+		<property name="username" value="${JDBC.USERNAME}" />
+		<property name="password" value="${JDBC.PASSWORD}" />
 	</bean>
 	    
-    
-    <!-- iBatis Config -->
-    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"> 
-    	<property name="configLocation" value="classpath:config/sqlmap/sqlMapConfig.xml"/>
-    	<property name="dataSource" ref="dataSource"/>
-    	<property name="useTransactionAwareDataSource" value="true"/>
-    </bean>
+	<!-- Mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="${DATASOURCE_CONFIG_LOCATION}" />
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<!-- // Mybatis -->    
 	
-	<bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate"> 
-    	<property name="sqlMapClient" ref="sqlMapClient"/>
-    </bean>
+	<!-- Mybatis Mapper Scan -->
+	<bean class="com.cattle.framework.spring.mapper.MapperScannerConfigurer">
+	  <property name="basePackage" value="com.cattle" />
+	  <property name="resourcePattern" value="**/dao/*.class" />
+	</bean>
+	<!-- //Mybatis Mapper Scan -->
+	
     
     <!-- DAO  -->
-    <bean id="cattleDao" class="com.cattle.main.dao.CattleDaoImpl">
+    <!-- <bean id="cattleDao" class="com.cattle.main.dao.CattleDaoImpl">
 		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
     </bean>
 	
 	<bean id="memberDao" class="com.cattle.member.dao.MemberDaoImpl">
 		<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean> -->
+    
+    <bean id="memberService" class="com.cattle.member.service.MemberService">
     </bean>
     
 </beans>

@@ -1,4 +1,4 @@
-package com.cattle.interceptor;
+package com.cattle.framework.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cattle.member.model.Member;
 
-public class CattleInterceptor implements HandlerInterceptor{
+public class CattleManagerInterceptor implements HandlerInterceptor{
 	
 	@Override
 	public void afterCompletion(HttpServletRequest req,

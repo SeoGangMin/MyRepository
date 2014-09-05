@@ -17,7 +17,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/cattle/*"/>
-			<bean class="com.cattle.interceptor.CattleInterceptor"/>
+			<bean class="com.cattle.framework.interceptor.CattleManagerInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 

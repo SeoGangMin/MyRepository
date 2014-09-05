@@ -1,6 +1,6 @@
 --select_member_one
 SELECT 
-	member_idx, 
+	member_seq, 
 	member_name, 
 	member_pwd,
 	member_phone, 

@@ -1,40 +1,40 @@
 
 -- select_fi_list
 SELECT
-	fi_idx, 
+	fi_seq, 
 	fi_no,
 	fi_noti_yn,
 	DATE_FORMAT(fi_noti_date, "%Y%m%d") AS fi_noti_date,
 	DATE_FORMAT(fi_delivery_date, "%Y%m%d") AS fi_delivery_date,
-	member_idx
+	member_seq
 FROM
 	tb_fertilization_info
 WHERE
-	member_idx = '';
+	member_seq = '';
 	
 --select_fi_one
 SELECT
-	fi_idx, 
+	fi_seq, 
 	fi_no,
 	fi_noti_yn,
 	DATE_FORMAT(fi_noti_date, "%Y%m%d") AS fi_noti_date,
 	DATE_FORMAT(fi_delivery_date, "%Y%m%d") AS fi_delivery_date,
-	member_idx
+	member_seq
 FROM
 	tb_fertilization_info
 WHERE
-	member_idx = ''
+	member_seq = ''
 AND 
-	fi_idx = ''; 
+	fi_seq = ''; 
 	
 --select_delivery_ready_list
 SELECT 
-	fi_idx, 
+	fi_seq, 
 	fi_no, 
 	fi_noti_yn, 
 	DATE_FORMAT(fi_noti_yn, "%Y%m%d") AS fi_noti_date,
 	DATE_FORMAT(fi_delivery_date, "%Y%m%d") AS fi_delivery_date,
-	member_idx
+	member_seq
 FROM 
 	tb_fertilization_info
 WHERE 
@@ -47,14 +47,14 @@ IN(
 	WHERE 
 		fi_delivery_date <= ''
 	AND	
-		fi_idx = ''
+		fi_seq = ''
 	AND	
-		member_idx = '';
+		member_seq = '';
 )
 
---select_fi_max_idx
+--select_fi_max_seq
 SELECT 
-	COALESCE(MAX(fi_idx),1) as fi_idx 
+	COALESCE(MAX(fi_seq),1) as fi_seq 
 FROM 
 	tb_fertilization_info;
 
@@ -62,19 +62,19 @@ FROM
 DELETE t1.*, t2.* FROM 
 	tb_cattle_info t1, tb_reg_info t2
 WHERE 
-	t1.cattle_idx = t2.cattle_idx
+	t1.cattle_seq = t2.cattle_seq
 AND 
-	t1.cattle_idx 
+	t1.cattle_seq 
 IN(
-	SELECT sub.cattle_idx FROM(
+	SELECT sub.cattle_seq FROM(
 		SELECT 
-			cattle_idx
+			cattle_seq
 		FROM 
 			tb_cattle_info
 		WHERE 
 			cattle_out_date = DATE_FORMAT(NOW(), "%Y%m%d")	
 		AND	
-			member_idx = #member_idx#
+			member_seq = #member_seq#
 	)AS sub
 );
 
@@ -82,9 +82,9 @@ IN(
 DELETE FROM
 	tb_fertilization_info
 WHERE
-	fi_idx = ''
+	fi_seq = ''
 AND 
-	member_idx = '';
+	member_seq = '';
 	
 --update_fi_delivery_date
 UPDATE 
@@ -92,20 +92,20 @@ UPDATE
 SET 
 	fi_delivery_date = '' 
 WHERE 
-	fi_idx = ''
+	fi_seq = ''
 AND
-	member_idx = '';
+	member_seq = '';
 	
 --insert_fi
 INSERT INTO 
 	tb_fertilization_info
 	(
-		fi_idx, 
+		fi_seq, 
 		fi_no,
 		fi_noti_yn,
 		fi_noti_date,
 		fi_delivery_date,
-		member_idx
+		member_seq
 	)
 VALUES
 	(
@@ -119,55 +119,55 @@ VALUES
 
 -- select_fd_list
 SELECT 	
-	fd_idx,
+	fd_seq,
 	DATE_FORMAT(fd_reg_date, "%Y%m%d") AS fd_reg_date,
-	fi_idx
+	fi_seq
 FROM 
 	tb_fertilization_date
 WHERE
-	fd_idx = '';	
+	fd_seq = '';	
 AND
-	member_idx=''; 
+	member_seq=''; 
 
 -- select_fd_one
 SELECT 	
-	fd_idx,
+	fd_seq,
 	DATE_FORMAT(fd_reg_date, "%Y%m%d") AS fd_reg_date,
-	fi_idx
+	fi_seq
 FROM 
 	tb_fertilization_date
 WHERE
-	fd_idx = ''
+	fd_seq = ''
 AND
-	fi_idx = ''
+	fi_seq = ''
 AND
-	member_idx='';
+	member_seq='';
 
 --delete_fd_one
 DELETE FROM
 	tb_fertilization_date
 WHERE
-	fd_idx = ''
+	fd_seq = ''
 AND
-	fi_idx = ''
+	fi_seq = ''
 AND
-	member_idx='';
+	member_seq='';
 
 --delete_fd_list
 DELETE FROM
 	tb_fertilization_date
 WHERE
-	fd_idx = ''
+	fd_seq = ''
 AND
-	member_idx='';
+	member_seq='';
 	
 --insert_fd
 INSERT INTO 
 	tb_fertilization_date
 	(
 		fd_reg_date,
-		fi_idx,
-		member_idx
+		fi_seq,
+		member_seq
 	)
 VALUES
 	(

@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD SQL Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
-<sqlMap>
-	<!-- <typeAlias alias="member" type="com.spring.vo.MemberVO"/>
-	<select id="select_member" parameterClass="member" resultClass="member">
+<!DOCTYPE mapper      
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cattle.member.dao.MemberDao">
+	
+	<select id="getMemberInfo" resultType="Member">
 		SELECT 
-			member_idx, 
+			member_seq, 
 			member_name, 
 			member_pwd,
 			member_phone, 
 			DATE_FORMAT(member_reg_date, '%Y%m%d')AS member_reg_date
 		FROM 
-			tb_member_info
-		WHERE
-			member_name = #member_name#
-		AND
-			member_pwd  = #member_pwd#
-		AND
-			member_phone = #member_phone#
+			tb_member
 					
 	</select>
-	
+	<!-- 
 	<insert id="insert_member" parameterClass="member">
 		INSERT INTO tb_member_info(			
 			member_name,
@@ -35,8 +31,7 @@
 				DATE_FORMAT(now(), '%Y%m%d')
 			)
 	</insert> -->
-</sqlMap>
-
+</mapper>
 
 
 

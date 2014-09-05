@@ -1,4 +1,4 @@
-package com.cattle.filter; 
+package com.cattle.framework.filter; 
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
 
-public class CattleFilter implements Filter{
+public class CattleManagerFilter implements Filter{
 
 	@Override
 	public void destroy() {

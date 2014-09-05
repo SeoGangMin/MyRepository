@@ -95,7 +95,7 @@
 			cattle_idx = #cattle_idx#
 		AND 
 			member_idx = #member_idx#
-		AND
+		
 			
 	</delete>
 	
